@@ -1,0 +1,56 @@
+const int QRD1114_PIN = A0; // Sensor output voltage
+int led1 = 13 ;
+int digitalPin = 3; // linear Hall magnetic sensor digital interface
+int analogPin = A1; // linear Hall magnetic sensor analog interface
+int digitalVal ; // digital readings
+int analogVal; // analog readings
+const int PINAIN1 =2;
+const int PINAIN2 = 1;
+void setup()
+{
+Serial.begin(9600);
+pinMode(QRD1114_PIN, INPUT);
+pinMode (led1, OUTPUT);
+pinMode (digitalPin, INPUT);
+//pinMode(analogPin, INPUT);
+pinMode(PINAIN1,OUTPUT);
+pinMode(PINAIN2,OUTPUT);
+Serial.begin(9600);
+}
+void loop()
+{
+// Read in the ADC and convert it to a voltage:
+pinMode (led1, OUTPUT);
+int proximityADC = analogRead(QRD1114_PIN);
+float proximityV = (float)proximityADC * 5.0 / 1023.0;
+Serial.println(proximityV);
+delay(100);
+if (proximityV < 3.0)//
+{
+digitalWrite (led1, LOW);
+}
+else
+{
+digitalWrite (led1, HIGH);
+}
+pinMode(PINAIN1,OUTPUT);
+pinMode(PINAIN2,OUTPUT);
+// Read the digital interface
+digitalVal = digitalRead(digitalPin) ;
+if (digitalVal == HIGH) // When magnetic field is present, Arduino LED is on
+{
+1
+digitalWrite(PINAIN1, HIGH);
+digitalWrite(PINAIN2, HIGH);
+}
+else
+{
+1
+digitalWrite(PINAIN1, LOW);
+digitalWrite(PINAIN2, LOW);
+}
+// Read the analog interface
+analogVal = analogRead(analogPin);
+Serial.println(analogVal); // print analog value
+delay(1000);
+}
